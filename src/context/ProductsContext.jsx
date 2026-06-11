@@ -25,14 +25,38 @@ export function ProductsProvider({ children }) {
     loadProducts()
   }, [loadProducts])
 
+  const addProducts = useCallback(async (formData) => {
+    try {
+      const newProduct = await productApi.createProduct(formData)
+      dispatch({ type: 'ADD_POST', payload: newProduct })
+    } catch (error) {
+      dispatch({
+        type: 'FETCH_ERROR',
+        payload: error.message || 'Failed to create product'
+      })
+    }
+  }, [])
+
+  const startEdit = useCallback((product) => {
+    dispatch({ type: 'SET_EDITING_PRODUCT', payload: product })
+  }, [])
+
+  const cancelEdit = useCallback(() => {
+    dispatch({ type: 'CLEAR_EDITING_PRODUCT' })
+  }, [])
+
   const value = useMemo(
     () => ({
       products: state.products,
       loading: state.loading,
       error: state.error,
+      editingProduct: state.editingProduct,
       loadProducts,
+      addProducts,
+      startEdit,
+      cancelEdit,
     }),
-    [state, loadProducts],
+    [state, loadProducts, addProducts, startEdit, cancelEdit],
   )
 
   return (

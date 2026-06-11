@@ -25,3 +25,12 @@ export async function getProducts() {
   const data = await handleResponse(response)
   return normalizeProducts(data)
 }
+
+export async function createProduct({ name, description, price }) {
+  const response = await fetch(BASE_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, description, price })
+  })
+  return handleResponse(response)
+}
