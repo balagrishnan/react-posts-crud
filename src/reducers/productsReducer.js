@@ -25,6 +25,12 @@ export function productsReducer(state, action) {
     case 'CLEAR_EDITING_PRODUCT':
       return { ...state, editingProduct: null }
 
+    case 'DELETE_PRODUCT':
+      return {
+        ...state,
+        products: state.products.filter((product) => product.id !== action.payload),
+      }
+
     default:
       return state
   }

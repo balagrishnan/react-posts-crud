@@ -34,3 +34,11 @@ export async function createProduct({ name, description, price }) {
   })
   return handleResponse(response)
 }
+
+export async function deleteProduct(id) {
+  const response = await fetch(`${BASE_URL}/${id}`, {
+    method: 'DELETE'
+  })
+
+  return handleResponse(response)
+}

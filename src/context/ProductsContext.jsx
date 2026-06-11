@@ -45,6 +45,18 @@ export function ProductsProvider({ children }) {
     dispatch({ type: 'CLEAR_EDITING_PRODUCT' })
   }, [])
 
+  const removeProduct = useCallback(async (id) => {
+    try {
+      await productApi.deleteProduct(id)
+      dispatch({ type: 'DELETE_PRODUCT', payload: id })
+    } catch (error) {
+      dispatch({
+        type: 'FETCH_ERROR',
+        payload: error.message || 'Failed to Delete Product'
+      })
+    }
+  }, [])
+
   const value = useMemo(
     () => ({
       products: state.products,
@@ -55,8 +67,9 @@ export function ProductsProvider({ children }) {
       addProducts,
       startEdit,
       cancelEdit,
+      removeProduct
     }),
-    [state, loadProducts, addProducts, startEdit, cancelEdit],
+    [state, loadProducts, addProducts, startEdit, cancelEdit, removeProduct],
   )
 
   return (
