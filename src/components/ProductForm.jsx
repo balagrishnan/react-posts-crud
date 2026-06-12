@@ -5,14 +5,13 @@ const emptyForm = { productname: '', productdesc: '', productprice: '' }
 
 export default function ProductForm() {
 
-    const { editingProduct, addProducts, saveProduct, cancelEdit } = useProducts()
+    const { editingProduct, addProducts, saveProducts, cancelEdit } = useProducts()
     const [form, setForm] = useState(emptyForm)
     const isEditing = editingProduct !== null
-    console.log(isEditing)
 
     useEffect(() => {
         if (editingProduct) {
-            setForm({ name: editingProduct.name, description: editingProduct.description, price: editingProduct.price })
+            setForm({ productname: editingProduct.name, productdesc: editingProduct.description, productprice: editingProduct.price })
         } else {
             setForm(emptyForm)
         }
@@ -26,15 +25,15 @@ export default function ProductForm() {
     const handleSubmit = async (event) => {
         event.preventDefault()
 
-        if (!form.productname.trim() || !form.productdesc.trim() || !form.productprice.trim()) {
+        if (!form.productname.trim() || !form.productdesc.trim() || !form.productprice) {
             return
         }
 
         if (isEditing) {
-            await saveProduct(editingProduct.id, {
+            await saveProducts(editingProduct.id, {
                 name: form.productname.trim(),
                 description: form.productdesc.trim(),
-                price: form.productprice.trim(),
+                price: form.productprice,
                 id: editingProduct.id
             })
         } else {
@@ -55,9 +54,9 @@ export default function ProductForm() {
 
     return (
         <section className="post-form-section">
-            <h2>Create Post</h2>
+            <h2>{isEditing ? 'Edit Post' : 'Create Post'}</h2>
             <form className="post-form" onSubmit={handleSubmit}>
-                <label htmlFor="Name">Name</label>
+                <label htmlFor="productname">Name</label>
                 <input
                     id="productname"
                     name="productname"
@@ -66,7 +65,7 @@ export default function ProductForm() {
                     placeholder="Enter Product Name"
                     required
                 />
-                <label htmlFor="Description">Description</label>
+                <label htmlFor="productdesc">Description</label>
                 <input
                     id="productdesc"
                     name="productdesc"
@@ -75,7 +74,7 @@ export default function ProductForm() {
                     placeholder="Enter Product Description"
                     required
                 />
-                <label htmlFor="Price">Price</label>
+                <label htmlFor="productprice">Price</label>
                 <input
                     id="productprice"
                     name="productprice"
@@ -87,7 +86,7 @@ export default function ProductForm() {
 
                 <div className="form-actions">
                     <button type="submit" className="btn btn-primary">
-                        Add Post
+                        {isEditing ? 'Save Changes' : 'Add Post'}
                     </button>
                     <button type="button" className="btn btn-secondary" onClick={handleCancel}>
                         Cancel

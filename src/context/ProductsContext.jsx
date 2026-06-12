@@ -28,7 +28,7 @@ export function ProductsProvider({ children }) {
   const addProducts = useCallback(async (formData) => {
     try {
       const newProduct = await productApi.createProduct(formData)
-      dispatch({ type: 'ADD_POST', payload: newProduct })
+      dispatch({ type: 'ADD_PRODUCT', payload: newProduct })
     } catch (error) {
       dispatch({
         type: 'FETCH_ERROR',
@@ -36,6 +36,22 @@ export function ProductsProvider({ children }) {
       })
     }
   }, [])
+
+  const saveProducts = useCallback(async (id, formData) => {
+    try {
+      const updatedProduct = await productApi.updateProduct(id,
+        {
+          ...formData,
+          id,
+        })
+      dispatch({ type: 'UPDATE_PRODUCT', payload: updatedProduct })
+    } catch (error) {
+      dispatch({
+        type: 'FETCH_ERROR',
+        payload: error.message || 'Failed to update product'
+      })
+    }
+  })
 
   const startEdit = useCallback((product) => {
     dispatch({ type: 'SET_EDITING_PRODUCT', payload: product })
@@ -65,11 +81,12 @@ export function ProductsProvider({ children }) {
       editingProduct: state.editingProduct,
       loadProducts,
       addProducts,
+      saveProducts,
+      removeProduct,
       startEdit,
       cancelEdit,
-      removeProduct
     }),
-    [state, loadProducts, addProducts, startEdit, cancelEdit, removeProduct],
+    [state, loadProducts, addProducts, startEdit, cancelEdit, removeProduct, saveProducts],
   )
 
   return (

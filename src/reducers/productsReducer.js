@@ -16,8 +16,16 @@ export function productsReducer(state, action) {
     case 'FETCH_ERROR':
       return { ...state, loading: false, error: action.payload }
 
-    case 'ADD_POST':
+    case 'ADD_PRODUCT':
       return { ...state, products: [action.payload, ...state.products] }
+
+    case 'UPDATE_PRODUCT':
+      return {
+        ...state,
+        products: state.products.map((product) =>
+          product.id === action.payload.id ? action.payload : product),
+        editingProduct: null,
+      }
 
     case 'SET_EDITING_PRODUCT':
       return { ...state, editingProduct: action.payload }
