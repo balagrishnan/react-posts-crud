@@ -20,11 +20,9 @@
   padding: 24px 32px;
   border-radius: 26px;
   border: 1px solid rgba(170, 59, 255, 0.18);
-  background: linear-gradient(
-    135deg,
-    rgba(170, 59, 255, 0.12),
-    rgba(255, 255, 255, 0.85)
-  );
+  background: linear-gradient(135deg,
+      rgba(170, 59, 255, 0.12),
+      rgba(255, 255, 255, 0.85));
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.08);
   text-align: left;
 }
@@ -84,7 +82,7 @@
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
 }
 
-.home-page > p {
+.home-page>p {
   margin-bottom: 1.5rem;
   line-height: 1.7;
   max-width: 60ch;
@@ -142,7 +140,8 @@
 }
 
 .post-form input,
-.post-form textarea {
+.post-form textarea,
+.post-form select {
   font: inherit;
   padding: 10px 14px;
   border-radius: 8px;
@@ -207,6 +206,37 @@
   margin: -0.5rem 0 1rem;
   font-size: 0.9rem;
   color: var(--text);
+}
+
+/* Category dropdown in ProductList.jsx */
+.category-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+.category-filter label {
+  font-size: 0.95rem;
+  color: var(--text-h);
+  font-weight: 500;
+}
+
+.category-select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23888'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 10px center/12px;
+  color: var(--text-h);
+  font: inherit;
+  cursor: pointer;
+}
+
+.category-select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
 }
 
 .error-hint {
@@ -360,11 +390,9 @@
 
 @media (prefers-color-scheme: dark) {
   .app-header {
-    background: linear-gradient(
-      135deg,
-      rgba(192, 132, 252, 0.12),
-      rgba(31, 32, 40, 0.85)
-    );
+    background: linear-gradient(135deg,
+        rgba(192, 132, 252, 0.12),
+        rgba(31, 32, 40, 0.85));
   }
 
   .home-page,

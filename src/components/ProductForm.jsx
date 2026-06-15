@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react"
 import { useProducts } from '../hooks/useProducts'
 
-const emptyForm = { productname: '', productdesc: '', productprice: '' }
+const emptyForm = {
+    productname: '',
+    productdesc: '',
+    productprice: '',
+    productcategory: 'Select',
+    productquantity: 0
+}
 
 export default function ProductForm() {
 
@@ -11,7 +17,13 @@ export default function ProductForm() {
 
     useEffect(() => {
         if (editingProduct) {
-            setForm({ productname: editingProduct.name, productdesc: editingProduct.description, productprice: editingProduct.price })
+            setForm({
+                productname: editingProduct.name,
+                productdesc: editingProduct.description,
+                productprice: editingProduct.price,
+                productcategory: editingProduct.category,
+                productquantity: editingProduct.quantity
+            })
         } else {
             setForm(emptyForm)
         }
@@ -34,13 +46,17 @@ export default function ProductForm() {
                 name: form.productname.trim(),
                 description: form.productdesc.trim(),
                 price: form.productprice,
-                id: editingProduct.id
+                id: editingProduct.id,
+                category: form.productcategory,
+                quantity: form.productquantity
             })
         } else {
             await addProducts({
                 name: form.productname.trim(),
                 description: form.productdesc.trim(),
                 price: form.productprice.trim(),
+                category: form.productcategory,
+                quantity: form.productquantity
             })
         }
 
@@ -54,7 +70,7 @@ export default function ProductForm() {
 
     return (
         <section className="post-form-section">
-            <h2>{isEditing ? 'Edit Post' : 'Create Post'}</h2>
+            <h2>{isEditing ? 'Edit Product' : 'Create Product'}</h2>
             <form className="post-form" onSubmit={handleSubmit}>
                 <label htmlFor="productname">Name</label>
                 <input
@@ -74,7 +90,7 @@ export default function ProductForm() {
                     placeholder="Enter Product Description"
                     required
                 />
-                <label htmlFor="productprice">Price</label>
+                <label htmlFor="productprice">Price ($)</label>
                 <input
                     id="productprice"
                     name="productprice"
@@ -83,7 +99,28 @@ export default function ProductForm() {
                     placeholder="Enter Product Price"
                     required
                 />
+                <label htmlFor="productquantity">Quantity</label>
+                <input
+                    id="productquantity"
+                    name="productquantity"
+                    text="number"
+                    value={form.productquantity}
+                    onChange={handleChange}
+                    placeholder="Enter Quantity"
+                    required>
 
+                </input>
+                <label htmlFor="productcategory">Category</label>
+                <input
+                    id="productcategory"
+                    name="productcategory"
+                    text="text"
+                    value={form.productcategory}
+                    onChange={handleChange}
+                    placeholder="Enter Category"
+                    required>
+
+                </input>
                 <div className="form-actions">
                     <button type="submit" className="btn btn-primary">
                         {isEditing ? 'Save Changes' : 'Add Post'}

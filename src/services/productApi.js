@@ -31,20 +31,20 @@ export async function getProduct(id) {
   return handleResponse(response)
 }
 
-export async function createProduct({ name, description, price }) {
+export async function createProduct({ name, description, price, category, quantity }) {
   const response = await fetch(BASE_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name, description, price })
+    body: JSON.stringify({ name, description, price, category, quantity })
   })
   return handleResponse(response)
 }
 
-export async function updateProduct(id, { name, description, price }) {
+export async function updateProduct(id, { name, description, price, category, quantity }) {
   const response = await fetch(`${BASE_URL}/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id, name, description, price })
+    body: JSON.stringify({ id, name, description, price, category, quantity })
   })
 
   return handleResponse(response)
