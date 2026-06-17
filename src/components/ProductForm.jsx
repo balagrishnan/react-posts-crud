@@ -6,7 +6,7 @@ const emptyForm = {
     productdesc: '',
     productprice: '',
     productcategory: 'Select',
-    productquantity: 1
+    quantity: 1
 }
 
 export default function ProductForm() {
@@ -24,8 +24,9 @@ export default function ProductForm() {
                 productdesc: editingProduct.description,
                 productprice: editingProduct.price,
                 productcategory: editingProduct.category,
-                productquantity: editingProduct.quantity
+                quantity: editingProduct.quantity
             })
+            console.log(form)
         } else {
             setForm(emptyForm)
         }
@@ -50,7 +51,7 @@ export default function ProductForm() {
                 price: form.productprice,
                 id: editingProduct.id,
                 category: form.productcategory,
-                quantity: form.productquantity
+                quantity: form.quantity
             })
             setCaption('Add Product')
         } else {
@@ -59,7 +60,7 @@ export default function ProductForm() {
                 description: form.productdesc.trim(),
                 price: form.productprice.trim(),
                 category: form.productcategory,
-                quantity: form.productquantity
+                quantity: form.quantity
             })
         }
 
@@ -109,12 +110,12 @@ export default function ProductForm() {
                     placeholder="Enter Product Price"
                     required
                 />
-                <label htmlFor="productquantity">Quantity</label>
+                <label htmlFor="quantity">Quantity</label>
                 <QuantityControl
-                    id="productquantity"
-                    name="productquantity"
-                    value={form.productquantity}
-                    onChange={(val) => setForm(prev => ({ ...prev, productquantity: val }))}
+                    id="quantity"
+                    name="quantity"
+                    value={form.quantity}
+                    onChange={(val) => setForm(prev => ({ ...prev, quantity: val }))}
                 />
                 <label htmlFor="productcategory">Category</label>
                 <input

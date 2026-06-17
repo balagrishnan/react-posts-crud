@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 //import './QuantityControl.css';
 
-const QuantityControl = ({ min = 1, max = 99, initialValue = 1, onChange }) => {
-    const [quantity, setQuantity] = useState(initialValue);
+const QuantityControl = ({ min = 1, max = 99, initialValue = 1, value, onChange }) => {
+    const [quantity, setQuantity] = useState(value ?? initialValue);
+
+    useEffect(() => {
+        if (value !== undefined) {
+            setQuantity(value);
+        }
+    }, [value]);
 
     const handleIncrement = () => {
         if (quantity < max) {
@@ -21,16 +27,20 @@ const QuantityControl = ({ min = 1, max = 99, initialValue = 1, onChange }) => {
     };
 
     const handleInputChange = (e) => {
-        const value = parseInt(e.target.value, 10);
+        const inputVal = e.target.value;
 
-        // If the input is empty or NaN, let the user type, but fall back gracefully
-        if (isNaN(value)) {
+        // Allow empty string while typing
+        if (inputVal === '') {
             setQuantity('');
+            if (onChange) onChange('');
             return;
         }
 
+        const parsed = parseInt(inputVal, 10);
+        if (isNaN(parsed)) return;
+
         // Clamp the value between min and max
-        const clampedValue = Math.max(min, Math.min(max, value));
+        const clampedValue = Math.max(min, Math.min(max, parsed));
         setQuantity(clampedValue);
         if (onChange) onChange(clampedValue);
     };
