@@ -24,7 +24,9 @@ export default function ProductList() {
       if (val === undefined || val === null) return false
       return String(val).toLocaleLowerCase().includes(searchLower)
     })
-  })
+  }).sort((a, b) => b.id - a.id)
+
+
 
   if (loading) {
     return <div className="status-message">Loading products...</div>

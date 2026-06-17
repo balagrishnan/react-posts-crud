@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import { useProducts } from '../hooks/useProducts'
-
+import QuantityControl from '../components/QuantityControl'
 const emptyForm = {
     productname: '',
     productdesc: '',
     productprice: '',
     productcategory: 'Select',
-    productquantity: 0
+    productquantity: 1
 }
 
 export default function ProductForm() {
@@ -14,9 +14,11 @@ export default function ProductForm() {
     const { editingProduct, addProducts, saveProducts, cancelEdit } = useProducts()
     const [form, setForm] = useState(emptyForm)
     const isEditing = editingProduct !== null
+    const [caption, setCaption] = useState("Add Product")
 
     useEffect(() => {
         if (editingProduct) {
+            setCaption('Save Changes')
             setForm({
                 productname: editingProduct.name,
                 productdesc: editingProduct.description,
@@ -50,6 +52,7 @@ export default function ProductForm() {
                 category: form.productcategory,
                 quantity: form.productquantity
             })
+            setCaption('Add Product')
         } else {
             await addProducts({
                 name: form.productname.trim(),
@@ -66,6 +69,12 @@ export default function ProductForm() {
     const handleCancel = () => {
         cancelEdit()
         setForm(emptyForm)
+        setCaption('Add Product')
+    }
+
+    const handleClear = () => {
+        setForm(emptyForm)
+        setCaption('Save Changes')
     }
 
     return (
@@ -87,6 +96,7 @@ export default function ProductForm() {
                     name="productdesc"
                     type="text" value={form.productdesc}
                     onChange={handleChange}
+                    maxLength={100}
                     placeholder="Enter Product Description"
                     required
                 />
@@ -100,16 +110,12 @@ export default function ProductForm() {
                     required
                 />
                 <label htmlFor="productquantity">Quantity</label>
-                <input
+                <QuantityControl
                     id="productquantity"
                     name="productquantity"
-                    text="number"
                     value={form.productquantity}
-                    onChange={handleChange}
-                    placeholder="Enter Quantity"
-                    required>
-
-                </input>
+                    onChange={(val) => setForm(prev => ({ ...prev, productquantity: val }))}
+                />
                 <label htmlFor="productcategory">Category</label>
                 <input
                     id="productcategory"
@@ -121,13 +127,18 @@ export default function ProductForm() {
                     required>
 
                 </input>
+
                 <div className="form-actions">
-                    <button type="submit" className="btn btn-primary">
-                        {isEditing ? 'Save Changes' : 'Add Post'}
+                    <button type="submit" id="saveform" className="btn btn-primary">
+                        {/* {isEditing ? 'Save Changes' : 'Add Post'} */}
+                        {caption}
                     </button>
                     <button type="button" className="btn btn-secondary" onClick={handleCancel}>
                         Cancel
                     </button>
+                    {/* <button type="button" className="btn btn-secondary" onClick={handleClear}>
+                        Clear
+                    </button> */}
                 </div>
             </form>
         </section>
