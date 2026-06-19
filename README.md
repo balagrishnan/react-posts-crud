@@ -40,7 +40,7 @@ Uses [JSONPlaceholder](https://jsonplaceholder.typicode.com/posts):
 
 | Method | Endpoint | Purpose |
 |--------|----------|---------|
-| GET | `http://localhost:8080/api/products` | List all products |
+| GET | `http://localhost:8081/api/products` | List all products |
 
 Start your backend on port **8080** before testing the products section. If the API is down, the app shows an error with a **Retry** button.
 

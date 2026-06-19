@@ -37,7 +37,7 @@ export default function ProductList() {
       <div className="status-message error">
         <p>Error: {error}</p>
         <p className="error-hint">
-          Make sure your backend is running at http://localhost:8080
+          Make sure your backend is running at http://localhost:8081
         </p>
         <button type="button" className="btn btn-secondary" onClick={loadProducts}>
           Retry
@@ -68,7 +68,7 @@ export default function ProductList() {
       </div>
       {filtered.length === 0 ? (<div className="status-message">No products found from the local API.</div>) : (<section className="product-list">
         <h2>Local Products ({filtered.length})</h2>
-        <p className="section-hint">Fetched from http://localhost:8080/api/products</p>
+        <p className="section-hint">Fetched from http://localhost:8081/api/products</p>
         <div className="product-grid">
           {filtered.map((product, index) => (
             <ProductItem

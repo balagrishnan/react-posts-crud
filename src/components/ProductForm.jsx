@@ -26,7 +26,6 @@ export default function ProductForm() {
                 productcategory: editingProduct.category,
                 quantity: editingProduct.quantity
             })
-            console.log(form)
         } else {
             setForm(emptyForm)
         }
@@ -110,7 +109,7 @@ export default function ProductForm() {
                     placeholder="Enter Product Price"
                     required
                 />
-                <label htmlFor="quantity">Quantity</label>
+                <label htmlFor="quantity">Quantity (1 - 99)</label>
                 <QuantityControl
                     id="quantity"
                     name="quantity"
