@@ -25,7 +25,7 @@ export default function Home() {
           <h3>Products</h3>
           <p>
             Read products from your local API at
-            http://localhost:8080/api/products.
+            http://localhost:8081/api/products.
           </p>
           <Link to="/products" className="btn btn-secondary">
             Go to Products
