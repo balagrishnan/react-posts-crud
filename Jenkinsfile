@@ -36,7 +36,7 @@ pipeline {
                             echo 'Building and running the React Frontend container...'
                             bat 'docker build -t frontend-image .'
                             // Mapping port 3000 on your machine to the container's Nginx port 80
-                            bat 'docker run -d -p 3000: 80 --name product-service-react frontend-image'
+                            bat 'docker run -d -p 3000:80 --name product-service-react frontend-image'
                 }
             }
         }
