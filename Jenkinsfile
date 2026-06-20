@@ -26,30 +26,17 @@ pipeline {
             steps {
                 script {                    
                     echo 'Cleaning up existing frontend container...'
-                    try {
-                            bat 'docker stop my-backend-app || ver > nul'
-                        } catch (Exception e) {
-                            echo 'Container is already stopped.'
-                        }
+                        try { 
+                            bat 'docker stop product-service-react || ver > nul'
+                        } catch (Exception e) {}
+                        try { 
+                            bat 'docker rm product-service-react || ver > nul'
+                        } catch (Exception e) {}
                         
-                        try {
-                            bat 'docker rm my-backend-app || ver > nul'
-                        } catch (Exception e) {
-                            echo 'Container is already removed.'
-                        }
-                        
-                        try {
-                            echo 'Building and running the new Docker container...'
-                            bat 'docker build --no-cache -t backend-image .'
-                            
-                            // CHANGED PORT: Mapping local Windows port 8081 to container port 8080
-                            bat 'docker run -d -p 8081:8080 --name my-backend-app backend-image'
-                            
-                            echo 'Docker container successfully deployed on port 8081!'
-                        } catch (Exception e) {
-                            echo 'Failed to build or run the Docker container.'
-                            throw e
-                        }
+                            echo 'Building and running the React Frontend container...'
+                            bat 'docker build -t frontend-image .'
+                            // Mapping port 3000 on your machine to the container's Nginx port 80
+                            bat 'docker run -d -p 3000: 80 --name product-service-react frontend-image'
                 }
             }
         }
