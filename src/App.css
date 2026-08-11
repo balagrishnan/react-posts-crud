@@ -29,7 +29,7 @@
 
 .app-header p {
   margin-top: 0.65rem;
-  max-width: 52ch;
+  /* max-width: 52ch; */
   line-height: 1.7;
 }
 
