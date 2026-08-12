@@ -8,7 +8,7 @@ test.describe('ProductList regression tests', () => {
                 contentType: 'application/json',
                 body: JSON.stringify([
                     {
-                        id: 1,
+                        id: 100005,
                         name: 'Laptop',
                         description: 'Gaming laptop',
                         price: 1299,
@@ -16,7 +16,7 @@ test.describe('ProductList regression tests', () => {
                         quantity: 3,
                     },
                     {
-                        id: 2,
+                        id: 100006,
                         name: 'Notebook',
                         description: 'Spiral notebook',
                         price: 6,
@@ -24,7 +24,7 @@ test.describe('ProductList regression tests', () => {
                         quantity: 12,
                     },
                     {
-                        id: 3,
+                        id: 100007,
                         name: 'Coffee Beans',
                         description: 'Roasted coffee beans',
                         price: 18,
@@ -40,22 +40,22 @@ test.describe('ProductList regression tests', () => {
 
     test('renders the loaded product list and filters by text search', async ({ page }) => {
         await expect(page.getByRole('heading', { name: /Local Products \(3\)/i })).toBeVisible();
-        await expect(page.getByText('Laptop')).toBeVisible();
-        await expect(page.getByText('Notebook')).toBeVisible();
+        await expect(page.getByRole('heading', { name: 'Laptop' })).toBeVisible();
+        await expect(page.getByRole('heading', { name: 'Notebook' })).toBeVisible();
 
         await page.getByLabel('Search by Name').fill('laptop');
 
         await expect(page.getByRole('heading', { name: /Local Products \(1\)/i })).toBeVisible();
-        await expect(page.getByText('Laptop')).toBeVisible();
-        await expect(page.getByText('Notebook')).not.toBeVisible();
+        await expect(page.getByRole('heading', { name: 'Laptop' })).toBeVisible();
+        await expect(page.getByRole('heading', { name: 'Notebook' })).not.toBeVisible();
     });
 
     test('filters by category and shows empty state when no products match', async ({ page }) => {
         await page.getByLabel('Filter by Category').selectOption('Electronics');
 
         await expect(page.getByRole('heading', { name: /Local Products \(1\)/i })).toBeVisible();
-        await expect(page.getByText('Laptop')).toBeVisible();
-        await expect(page.getByText('Notebook')).not.toBeVisible();
+        await expect(page.getByRole('heading', { name: 'Laptop' })).toBeVisible();
+        await expect(page.getByRole('heading', { name: 'Notebook' })).not.toBeVisible();
 
         await page.getByLabel('Search by Name').fill('no match');
 
