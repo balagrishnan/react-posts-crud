@@ -53,15 +53,9 @@ pipeline {
             }
             post {
                 always {
-                    // Publishes the generated Playwright HTML test report in Jenkins
-                    publishHTML([
-                        allowMissing: true,
-                        alwaysLinkToLastBuild: true,
-                        keepAll: true,
-                        reportDir: 'playwright-report',
-                        reportFiles: 'index.html',
-                        reportName: 'Playwright Regression Report'
-                    ])
+                    // Zip the report directory before archiving
+                    bat 'powershell Compress-Archive -Path playwright-report\\* -DestinationPath playwright-report.zip -Force'
+                    archiveArtifacts artifacts: 'playwright-report.zip', allowEmptyArchive: true
                 }
             }
         }
