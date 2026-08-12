@@ -40,14 +40,42 @@ pipeline {
                 }
             }
         }
+        
+        // STEP 4: Run Playwright Regression Tests against the active Docker container
+        stage('Run Playwright Regression Tests') {
+            steps {
+                echo 'Installing Playwright browser binaries...'
+                bat 'npx playwright install --with-deps'
+                
+                echo 'Executing Playwright regression suite against http://localhost:3000...'
+                // Running tests using the headless browser runner
+                bat 'npx playwright test'
+            }
+            post {
+                always {
+                    // Publishes the generated Playwright HTML test report in Jenkins
+                    publishHTML([
+                        allowMissing: true,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'playwright-report',
+                        reportFiles: 'index.html',
+                        reportName: 'Playwright Regression Report'
+                    ])
+                }
+            }
+        }
     }
 
     post {
         success {
-            echo 'Frontend built and deployed successfully!'
+            echo 'Frontend built, deployed, and verified with Playwright successfully!'
         }
         failure {
-            echo 'The pipeline build encountered an error. Check logs above.'
+            echo 'The pipeline build or regression test encountered an error. Check logs above.'
+        }
+        always {
+            echo 'Pipeline execution completed.'
         }
     }
 }
